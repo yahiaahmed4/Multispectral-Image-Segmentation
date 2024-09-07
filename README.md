@@ -1,59 +1,74 @@
 # Multispectral Image Segmentation
 
-## Overview
+Welcome to the **Multispectral Image Segmentation** project. This repository contains code and documentation for a comprehensive image segmentation task using multispectral satellite images. The primary objective is to build and evaluate a U-Net model for segmenting water pixels from satellite imagery.
 
-The 'Multispectral Image Segmentation' project involves classifying water pixels in 12-dimensional satellite images using a U-Net model implemented from scratch. This repository contains a Jupyter Notebook named `Multispectral-Image-Segmentation.ipynb` that provides a step-by-step guide through the data preprocessing, model training, and evaluation processes.
+## Project Overview
 
-## Repository Structure
+This project aims to segment specific features from multispectral images, particularly focusing on identifying water bodies. The dataset used comprises multispectral images with 12 bands, and the segmentation model developed is based on the U-Net architecture, tailored for pixel-wise classification.
 
-- `Multispectral-Image-Segmentation.ipynb`: Jupyter Notebook with detailed code and explanations.
+## Contents
 
-## Code Explanation
+- **`Multispectral-Image-Segmentation.ipynb`**: A Jupyter Notebook that includes all code for preprocessing, model building, training, and evaluation.
+- **Data**: Organized into `data/images` and `data/labels` directories for input images and corresponding labels respectively.
+
+## Key Components
 
 ### 1. Data Preprocessing
 
-**Objective**: Prepare the raw multispectral images and corresponding label masks for training the U-Net model.
+The preprocessing pipeline involves several key steps to prepare the data for training:
 
-- **Loading Data**: Images and label masks are loaded from the specified directories. Each image is associated with a label mask, where water pixels are highlighted.
-- **Normalization**: The pixel values of the images are normalized to a range of [0, 1] by dividing by 255.0. This step ensures that the model receives data in a consistent scale, improving training stability.
-- **Label Processing**: The label masks were already normalized to a range of [0, 1] to match the scale of the input images. This normalization facilitates better training and performance of the model.
+- **File Cleanup**: Removing redundant label files from the labels folder.
+- **Band Visualization**: Visualizing each band of multispectral images to understand the data better.
+- **Composite Visualization**: Creating RGB and false-color composites for visual analysis.
+- **Normalization and Augmentation**: Loading and normalizing images, applying data augmentation techniques, and preparing the dataset for training using TensorFlow's `tf.data.Dataset`.
 
-### 2. Model Architecture
+### 2. U-Net Model
 
-**Objective**: Define and build the U-Net model from scratch for image segmentation.
+The core of this project is the U-Net model for image segmentation:
 
-- **U-Net Structure**: The U-Net architecture includes an encoder and decoder with skip connections to capture multi-scale features. The encoder consists of convolutional and pooling layers to downsample the input, while the decoder uses upsampling layers to restore the spatial resolution.
-- **Custom Layers**: Custom convolutional and activation layers are used to ensure that the network can learn complex patterns in the multispectral images.
+- **Model Architecture**: The U-Net architecture consists of an encoding path to capture context and a decoding path for precise localization. Key components include convolutional layers, max pooling, upsampling, and concatenation operations.
+- **Training**: The model is trained using binary crossentropy loss and optimized with the Adam optimizer. Metrics such as accuracy, precision, recall, and Intersection over Union (IoU) are monitored.
 
-### 3. Model Training
+### 3. Evaluation and Visualization
 
-**Objective**: Train the U-Net model on the preprocessed data.
+- **Metrics**: Training and validation losses, accuracy, precision, recall, and IoU are tracked.
+- **Predictions**: The model's performance is evaluated on the test dataset, and predictions are visualized alongside true labels.
 
-- **Compilation**: The model is compiled with a suitable loss function (e.g., binary crossentropy) and an optimizer (e.g., Adam). The choice of loss function and optimizer is crucial for effective training.
-- **Training Process**: The model is trained using the training dataset, with validation on a separate validation set. This helps in monitoring overfitting and adjusting hyperparameters as needed.
+## Setup
 
-### 4. Model Evaluation
+To run the code in this repository, follow these steps:
 
-**Objective**: Assess the performance of the trained U-Net model.
+1. **Clone the Repository**
 
-- **Evaluation Metrics**: Metrics such as Intersection over Union (IoU) and pixel accuracy are used to evaluate the model’s performance on the test set. These metrics provide insights into how well the model segments water pixels compared to ground truth labels.
-- **Visualization**: Sample predictions are visualized alongside ground truth masks to qualitatively assess the model’s segmentation quality.
-
-
-## How to Use
-
-1. **Clone the Repository**:
    ```bash
    git clone https://github.com/yahiaahmed4/Multispectral-Image-Segmentation.git
-   ```
-
-2. **Navigate to the Project Directory**:
-   ```bash
    cd Multispectral-Image-Segmentation
    ```
 
-3. **Run the Notebook**: Open `Multispectral-Image-Segmentation.ipynb` in Jupyter Notebook or JupyterLab to view and execute the code.
+2. **Install Dependencies**
 
-## Contribution
+   Ensure you have the required libraries. You can install them using pip:
 
-Feel free to open issues or submit pull requests if you have suggestions or improvements. Contributions are welcome!
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+   The `requirements.txt` file should include libraries such as `tensorflow`, `numpy`, `matplotlib`, `rasterio`, and `PIL`.
+
+3. **Prepare the Dataset**
+
+   Organize your dataset into the `data/images` and `data/labels` directories. Make sure your images are in TIFF format and labels are in PNG format.
+
+4. **Run the Notebook**
+
+   Open the Jupyter Notebook `Multispectral-Image-Segmentation.ipynb` and execute the cells to preprocess the data, build and train the model, and evaluate its performance.
+
+## Results
+
+- **Training Metrics**: Includes loss, accuracy, precision, recall, and IoU metrics plotted over epochs.
+- **Test Results**: Performance metrics on the test set, including loss, accuracy, precision, recall, and IoU.
+
+## Contributing
+
+Contributions are welcome! If you have suggestions or improvements, please feel free to open an issue or submit a pull request.
+
