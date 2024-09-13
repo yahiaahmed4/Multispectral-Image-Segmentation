@@ -1,6 +1,6 @@
 # Multispectral Image Segmentation
 
-Welcome to the **Multispectral Image Segmentation** project. This repository contains code and documentation for a comprehensive image segmentation task using multispectral satellite images. The primary objective is to build and evaluate a U-Net model for segmenting water pixels from satellite imagery.
+Welcome to the **Multispectral Image Segmentation** project. This repository contains code and documentation for a comprehensive image segmentation task using multispectral satellite images. The primary objective is to build, fine-tune, and evaluate a U-Net model for segmenting water pixels from satellite imagery.
 
 ## Project Overview
 
@@ -8,8 +8,9 @@ This project aims to segment specific features from multispectral images, partic
 
 ## Contents
 
-- **`Multispectral-Image-Segmentation.ipynb`**: A Jupyter Notebook that includes all code for preprocessing, model building, training, and evaluation.
-- **Data**: Organized into `data/images` and `data/labels` directories for input images and corresponding labels respectively.
+- **`Multispectral-Image-Segmentation.ipynb`**: A Jupyter Notebook that includes all code for preprocessing, model building, training, and evaluation using a U-Net model from scratch.
+- **`Fine-Tuning-U-Net.ipynb`**: A Jupyter Notebook that demonstrates the fine-tuning of a pretrained U-Net model with a ResNet50 encoder on the dataset. This notebook includes modifications for handling 12-channel input data and additional training details.
+
 
 ## Key Components
 
@@ -22,14 +23,21 @@ The preprocessing pipeline involves several key steps to prepare the data for tr
 - **Composite Visualization**: Creating RGB and false-color composites for visual analysis.
 - **Normalization and Augmentation**: Loading and normalizing images, applying data augmentation techniques, and preparing the dataset for training using TensorFlow's `tf.data.Dataset`.
 
-### 2. U-Net Model
+### 2. U-Net Model (From Scratch)
 
-The core of this project is the U-Net model for image segmentation:
+The initial approach uses a U-Net model built from scratch for image segmentation:
 
 - **Model Architecture**: The U-Net architecture consists of an encoding path to capture context and a decoding path for precise localization. Key components include convolutional layers, max pooling, upsampling, and concatenation operations.
 - **Training**: The model is trained using binary crossentropy loss and optimized with the Adam optimizer. Metrics such as accuracy, precision, recall, and Intersection over Union (IoU) are monitored.
 
-### 3. Evaluation and Visualization
+### 3. Fine-Tuning U-Net Model
+
+In addition to the scratch model, a pretrained U-Net model with a ResNet50 encoder has been fine-tuned:
+
+- **Pretrained Model**: The `Fine-Tuning-U-Net.ipynb` notebook demonstrates the fine-tuning of a U-Net model with a ResNet50 encoder, specifically adapted to handle 12-channel input data.
+- **Training**: The fine-tuning process involves loading a pretrained U-Net model, modifying the input layer to handle 12-channel data, and training it on the dataset. The model's performance is evaluated using similar metrics as the scratch model.
+
+### 4. Evaluation and Visualization
 
 - **Metrics**: Training and validation losses, accuracy, precision, recall, and IoU are tracked.
 - **Predictions**: The model's performance is evaluated on the test dataset, and predictions are visualized alongside true labels.
@@ -59,13 +67,13 @@ To run the code in this repository, follow these steps:
 
    Organize your dataset into the `data/images` and `data/labels` directories. Make sure your images are in TIFF format and labels are in PNG format.
 
-4. **Run the Notebook**
+4. **Run the Notebooks**
 
-   Open the Jupyter Notebook `Multispectral-Image-Segmentation.ipynb` and execute the cells to preprocess the data, build and train the model, and evaluate its performance.
+   Open the Jupyter Notebooks `Multispectral-Image-Segmentation.ipynb` and `Fine-Tuning-U-Net.ipynb` and execute the cells to preprocess the data, build and train the models, and evaluate their performance.
 
 ## Results
 
-- **Training Metrics**: Includes loss, accuracy, precision, recall, and IoU metrics plotted over epochs.
+- **Training Metrics**: Includes loss, accuracy, precision, recall, and IoU metrics plotted over epochs for both models.
 - **Test Results**: Performance metrics on the test set, including loss, accuracy, precision, recall, and IoU.
 
 ## Contributing
